@@ -1,0 +1,172 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@scaldwell77/aws-signed-fetch</title>
+	<meta name="description" content="Documentation for @scaldwell77/aws-signed-fetch">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@scaldwell77/aws-signed-fetch</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@scaldwell77/aws-signed-fetch</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#scaldwell77aws-signed-fetch" id="scaldwell77aws-signed-fetch" style="color: inherit; text-decoration: none;">
+					<h1>@scaldwell77/aws-signed-fetch</h1>
+				</a>
+				<p>An implementation of fetch that adds AWS signature headers to the request.</p>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code><span class="hljs-built_in">npm</span> install @scaldwell77/aws-signed-fetch
+</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { createSignedFetch } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@scaldwell77/aws-signed-fetch&#x27;</span>;
+
+<span class="hljs-comment">// Create a fetch that can call IAM-protected API Gateway endpoints.</span>
+<span class="hljs-keyword">const</span> fetch = createSignedFetch({
+    <span class="hljs-attr">service</span>: <span class="hljs-string">&#x27;execute-api&#x27;</span>,
+});
+
+<span class="hljs-comment">// ...</span>
+</code></pre>
+				<a href="#configuration" id="configuration" style="color: inherit; text-decoration: none;">
+					<h2>Configuration</h2>
+				</a>
+				<p>By default, the library uses the credentials and region specified in the global
+					<code>AWS.config</code> object. You can override these settings via the <code>awsCredentials</code>
+				and <code>awsRegion</code> options:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { createSignedFetch } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@scaldwell77/aws-signed-fetch&#x27;</span>;
+
+<span class="hljs-keyword">const</span> fetch = createSignedFetch({
+    <span class="hljs-attr">service</span>: <span class="hljs-string">&#x27;execute-api&#x27;</span>,
+    <span class="hljs-attr">awsCredentials</span>: {
+        <span class="hljs-comment">/* spell-checker: disable */</span>
+        <span class="hljs-attr">accessKeyId</span>: <span class="hljs-string">&#x27;asdfasdfd&#x27;</span>,
+        <span class="hljs-attr">secretAccessKey</span>: <span class="hljs-string">&#x27;asdfasdfd&#x27;</span>,
+        <span class="hljs-attr">sessionToken</span>: <span class="hljs-string">&#x27;asdfasdf&#x27;</span>,
+        <span class="hljs-comment">/* spell-checker: enable */</span>
+    },
+    <span class="hljs-attr">awsRegion</span>: <span class="hljs-string">&#x27;us-east-1&#x27;</span>,
+});
+</code></pre>
+				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+					<h2>Development</h2>
+				</a>
+				<p>NOTE: this package was bootstrapped with <a href="https://github.com/bitjson/typescript-starter">https://github.com/bitjson/typescript-starter</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#signarguments" class="tsd-kind-icon">Sign<wbr>Arguments</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#signedfetch" class="tsd-kind-icon">Signed<wbr>Fetch</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#buildawsrequest" class="tsd-kind-icon">build<wbr>Aws<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createsignedfetch" class="tsd-kind-icon">create<wbr>Signed<wbr>Fetch</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getcredentialprovider" class="tsd-kind-icon">get<wbr>Credential<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getregionprovider" class="tsd-kind-icon">get<wbr>Region<wbr>Provider</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getsignedheaders" class="tsd-kind-icon">get<wbr>Signed<wbr>Headers</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#signawsrequest" class="tsd-kind-icon">sign<wbr>Aws<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#signrequest" class="tsd-kind-icon">sign<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#transformheaders" class="tsd-kind-icon">transform<wbr>Headers</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
