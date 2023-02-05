@@ -7,18 +7,21 @@ import { defaultProvider as defaultCredentialProvider } from '@aws-sdk/credentia
 import { loadConfig } from '@aws-sdk/node-config-provider';
 import { HttpRequest as AwsHttpRequest } from '@aws-sdk/protocol-http';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
-import type { CredentialProvider, Credentials, Provider } from '@aws-sdk/types';
-import { parseUrl } from '@aws-sdk/url-parser';
+import type {
+    AwsCredentialIdentity,
+    AwsCredentialIdentityProvider,
+    Provider,
+} from '@aws-sdk/types';
 import fetch, { Request } from 'cross-fetch';
 
 type SignArguments = {
     readonly service: string;
     readonly regionProvider: Provider<string>;
-    readonly credentialProvider: CredentialProvider;
+    readonly credentialProvider: AwsCredentialIdentityProvider;
     readonly date?: Date;
 };
 
-const getCredentialProvider = (credentials?: Credentials) =>
+const getCredentialProvider = (credentials?: AwsCredentialIdentity) =>
     credentials
         ? () => Promise.resolve(credentials)
         : defaultCredentialProvider();
@@ -34,13 +37,48 @@ const getRegionProvider = (region?: string) =>
 const transformHeaders = (request: Request) => {
     const newHeaders: AwsHttpRequest['headers'] = {};
     const excludeHeaders = new Set(['host', 'content-type']);
-    request.headers.forEach((value, key) => {
+
+    const { headers, url } = request;
+    headers.forEach((value, key) => {
         if (excludeHeaders.has(key)) return;
         newHeaders[key] = value;
     });
+
     newHeaders['content-type'] = 'application/json';
-    newHeaders.host = new URL(request.url).host;
+    newHeaders.host = new URL(url).host;
     return newHeaders;
+};
+
+const parseUrlQuery = (url: URL) => {
+    const params: Record<string, string | Array<string> | null> = {};
+
+    const keys = [...url.searchParams.keys()];
+    if (keys.length === 0) return;
+
+    for (const key of keys) {
+        const values = url.searchParams.getAll(key);
+
+        if (values.length === 0) {
+            params[key] = null;
+        } else if (values.length === 1) {
+            params[key] = values[0] as string;
+        } else {
+            params[key] = values;
+        }
+    }
+
+    return params;
+};
+
+const parseUrl = (urlStr: string) => {
+    const url = new URL(urlStr);
+    return {
+        hostname: url.hostname,
+        port: url.port ? Number.parseInt(url.port, 10) : undefined,
+        protocol: url.protocol,
+        path: url.pathname,
+        query: parseUrlQuery(url),
+    };
 };
 
 const buildAwsRequest = (request: Request) =>
@@ -98,7 +136,7 @@ type SignedFetch = (
 
 export const createSignedFetch = (options: {
     readonly service: string;
-    readonly awsCredentials?: Credentials;
+    readonly awsCredentials?: AwsCredentialIdentity;
     readonly awsRegion?: string;
 }): SignedFetch => {
     const credentialProvider = getCredentialProvider(options.awsCredentials);
