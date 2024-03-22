@@ -2,11 +2,11 @@ import { Sha256 } from '@aws-crypto/sha256-js';
 import {
     NODE_REGION_CONFIG_FILE_OPTIONS,
     NODE_REGION_CONFIG_OPTIONS,
-} from '@aws-sdk/config-resolver';
+} from '@smithy/config-resolver';
 import { defaultProvider as defaultCredentialProvider } from '@aws-sdk/credential-provider-node';
-import { loadConfig } from '@aws-sdk/node-config-provider';
-import { HttpRequest as AwsHttpRequest } from '@aws-sdk/protocol-http';
-import { SignatureV4 } from '@aws-sdk/signature-v4';
+import { loadConfig } from '@smithy/node-config-provider';
+import { HttpRequest as AwsHttpRequest } from '@smithy/protocol-http';
+import { SignatureV4 } from '@smithy/signature-v4';
 import type {
     AwsCredentialIdentity,
     AwsCredentialIdentityProvider,
@@ -31,7 +31,7 @@ const getRegionProvider = (region?: string) =>
         ? () => Promise.resolve(region)
         : loadConfig(
               NODE_REGION_CONFIG_OPTIONS,
-              NODE_REGION_CONFIG_FILE_OPTIONS
+              NODE_REGION_CONFIG_FILE_OPTIONS,
           );
 
 const transformHeaders = (request: Request) => {
@@ -91,7 +91,7 @@ const buildAwsRequest = (request: Request) =>
 
 const signAwsRequest = async (
     request: AwsHttpRequest,
-    signArgs: SignArguments
+    signArgs: SignArguments,
 ) => {
     const [region, credentials] = await Promise.all([
         signArgs.regionProvider(),
@@ -118,7 +118,7 @@ const getSignedHeaders = async (request: Request, signArgs: SignArguments) => {
 
 export const signRequest = async (
     request: Request,
-    signArgs: SignArguments
+    signArgs: SignArguments,
 ): Promise<Request> => {
     const signedHeaders = await getSignedHeaders(request, signArgs);
     const signedRequest = new Request(request.url, {
@@ -131,7 +131,7 @@ export const signRequest = async (
 
 type SignedFetch = (
     input: RequestInfo,
-    init?: RequestInit
+    init?: RequestInit,
 ) => Promise<Response>;
 
 export const createSignedFetch = (options: {

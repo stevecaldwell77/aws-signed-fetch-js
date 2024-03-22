@@ -42,7 +42,3 @@ const fetch = createSignedFetch({
     awsRegion: 'us-east-1',
 });
 ```
-
-## Development
-
-NOTE: this package was bootstrapped with https://github.com/bitjson/typescript-starter

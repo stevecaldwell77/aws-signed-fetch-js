@@ -1,7 +1,7 @@
 import test from 'ava';
 import { Request } from 'cross-fetch';
 
-import { signRequest } from '.';
+import { signRequest } from './index.js';
 
 test('signRequest()', async (t) => {
     const host =
@@ -50,28 +50,28 @@ test('signRequest()', async (t) => {
     t.is(
         signedRequest.headers.get('content-type'),
         'application/json',
-        'Content-Type header set'
+        'Content-Type header set',
     );
     t.is(signedRequest.headers.get('host'), host, 'Host header set');
     t.is(
         signedRequest.headers.get('x-my-test'),
         'foobar',
-        'custom header preserved'
+        'custom header preserved',
     );
     t.is(
         signedRequest.headers.get('x-amz-security-token'),
         credentials.sessionToken,
-        'x-amz-security-token header added'
+        'x-amz-security-token header added',
     );
     t.is(
         signedRequest.headers.get('x-amz-date'),
         '20220324T163344Z',
-        'x-amz-date header added'
+        'x-amz-date header added',
     );
     t.is(
         signedRequest.headers.get('authorization'),
         'AWS4-HMAC-SHA256 Credential=QEBOPDUODEDEDPCRVHWU/20220324/us-east-1/appsync/aws4_request, SignedHeaders=content-type;host;x-amz-content-sha256;x-amz-date;x-amz-security-token;x-my-test, Signature=50409102c1bdff80eb31eb26a0944be4bfcb0afbdd8a6378e4d504117d6adbc8', // spell-checker: disable-line
-        'authorization header added'
+        'authorization header added',
     );
 
     t.pass();
