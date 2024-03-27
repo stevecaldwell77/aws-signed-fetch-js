@@ -42,3 +42,7 @@ const fetch = createSignedFetch({
     awsRegion: 'us-east-1',
 });
 ```
+
+## Testing
+
+See [HowTo: Live test of createSignedFetch()](./test-stack/README.md).

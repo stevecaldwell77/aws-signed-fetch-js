@@ -1,7 +1,7 @@
 import test from 'ava';
 import { Request } from 'cross-fetch';
 
-import { signRequest } from './index.js';
+import { createSignedFetch, signRequest } from './index.js';
 
 test('signRequest()', async (t) => {
     const host =
@@ -75,4 +75,33 @@ test('signRequest()', async (t) => {
     );
 
     t.pass();
+});
+
+test('request to lambda URL', async (t) => {
+    const lambdaUrl = process.env.SIGNED_FETCH_TEST_LAMBDA_URL;
+    if (!lambdaUrl) {
+        t.log(
+            'No SIGNED_FETCH_TEST_LAMBDA_URL environment variable set, skipping test',
+        );
+        t.pass();
+        return;
+    }
+
+    const signedFetch = createSignedFetch({
+        service: 'lambda',
+    });
+
+    const response1 = await fetch(lambdaUrl);
+    t.is(response1.status, 403, 'using regular fetch results in a 403 error');
+
+    const response2 = await signedFetch(lambdaUrl);
+
+    t.is(response2.status, 200, 'using signed fetch, response status is 200');
+
+    const body = await response2.json();
+    t.deepEqual(
+        body,
+        { message: 'Hello, World!' },
+        'response body matches expected',
+    );
 });
