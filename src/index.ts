@@ -80,13 +80,17 @@ const parseUrl = (urlStr: string) => {
     };
 };
 
-const buildAwsRequest = (request: Request) =>
-    new AwsHttpRequest({
+const buildAwsRequest = async (request: Request) => {
+    const bodyStr = await request.clone().text();
+    const args = {
         ...parseUrl(request.url),
         method: request.method,
         headers: transformHeaders(request),
-        body: request.body,
-    });
+        body: bodyStr,
+    };
+    const awsRequest = new AwsHttpRequest(args);
+    return awsRequest;
+};
 
 const signAwsRequest = async (
     request: AwsHttpRequest,
@@ -110,7 +114,7 @@ const signAwsRequest = async (
 };
 
 const getSignedHeaders = async (request: Request, signArgs: SignArguments) => {
-    const awsRequest = buildAwsRequest(request);
+    const awsRequest = await buildAwsRequest(request);
     const signedAwsRequest = await signAwsRequest(awsRequest, signArgs);
     return signedAwsRequest.headers;
 };

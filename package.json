@@ -1,6 +1,6 @@
 {
     "name": "@scaldwell77/aws-signed-fetch",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "An implementation of fetch that adds AWS signature headers to the request.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.1](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v3.0.0...v3.0.1) (2023-04-27)
+
+### Bug Fixes
+
+-   Fix issue with getting the request body using native fetch
+
 ## [3.0.0](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v2.0.1...v3.0.0) (2023-04-27)
 
 ### BREAKING CHANGES
