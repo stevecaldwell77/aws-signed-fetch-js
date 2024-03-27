@@ -1,5 +1,4 @@
 import test from 'ava';
-import { Request } from 'cross-fetch';
 
 import { createSignedFetch, signRequest } from './index.js';
 
@@ -70,7 +69,7 @@ test('signRequest()', async (t) => {
     );
     t.is(
         signedRequest.headers.get('authorization'),
-        'AWS4-HMAC-SHA256 Credential=QEBOPDUODEDEDPCRVHWU/20220324/us-east-1/appsync/aws4_request, SignedHeaders=content-type;host;x-amz-content-sha256;x-amz-date;x-amz-security-token;x-my-test, Signature=50409102c1bdff80eb31eb26a0944be4bfcb0afbdd8a6378e4d504117d6adbc8', // spell-checker: disable-line
+        'AWS4-HMAC-SHA256 Credential=QEBOPDUODEDEDPCRVHWU/20220324/us-east-1/appsync/aws4_request, SignedHeaders=content-type;host;x-amz-content-sha256;x-amz-date;x-amz-security-token;x-my-test, Signature=531b3240514ad8b559456474af5fbefac0cb8e929d3880cacda351a90710526b', // spell-checker: disable-line
         'authorization header added',
     );
 

@@ -12,7 +12,6 @@ import type {
     AwsCredentialIdentityProvider,
     Provider,
 } from '@aws-sdk/types';
-import fetch, { Request } from 'cross-fetch';
 
 type SignArguments = {
     readonly service: string;
@@ -125,14 +124,12 @@ export const signRequest = async (
         method: request.method,
         body: request.body,
         headers: signedHeaders,
+        duplex: request.duplex,
     });
     return signedRequest;
 };
 
-type SignedFetch = (
-    input: RequestInfo,
-    init?: RequestInit,
-) => Promise<Response>;
+type SignedFetch = typeof fetch;
 
 export const createSignedFetch = (options: {
     readonly service: string;
