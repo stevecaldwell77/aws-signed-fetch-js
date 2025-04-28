@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v3.0.1...v4.0.0) (2025-04-28)
+
+### BREAKING CHANGES
+
+-   Make all AWS-related packages peer dependencies instead or regular dependencies
+
 ## [3.0.1](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v3.0.0...v3.0.1) (2023-04-27)
 
 ### Bug Fixes
