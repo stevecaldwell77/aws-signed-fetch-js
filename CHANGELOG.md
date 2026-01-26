@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v4.0.0...v5.0.0) (2025-01-26)
+
+### BREAKING CHANGES
+
+- Upgrade all peer dependencies:
+
+```
+@aws-sdk/credential-provider-node : 3.540.0 => 3.972.2
+@smithy/config-resolver           : 2.2.0 => 4.4.6
+@smithy/node-config-provider      : 2.3.0 => 4.3.8
+@smithy/protocol-http             : 3.3.0 => 5.3.8
+@smithy/signature-v4              : 2.2.0 => 5.3.8
+```
+
 ## [4.0.0](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v3.0.1...v4.0.0) (2025-04-28)
 
 ### BREAKING CHANGES
