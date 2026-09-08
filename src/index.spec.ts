@@ -2,6 +2,19 @@ import test from 'ava';
 
 import { createSignedFetch, signRequest } from './index.js';
 
+const testUrl = 'https://example.us-east-1.amazonaws.com/graphql';
+
+const testSignArgs = {
+    service: 'appsync',
+    regionProvider: async () => 'us-east-1',
+    credentialProvider: async () => ({
+        /* spell-checker: disable */
+        accessKeyId: 'QEBOPDUODEDEDPCRVHWU',
+        secretAccessKey: 'LDdxaf5TTG350BREOYzkQd26QrqPoZPAzMNKDHjY',
+        /* spell-checker: enable */
+    }),
+};
+
 test('signRequest()', async (t) => {
     const host =
         'gfaichcrsslcpgcnxgaryagfpw.appsync-api.us-east-1.amazonaws.com'; // spell-checker: disable-line
@@ -74,6 +87,57 @@ test('signRequest()', async (t) => {
     );
 
     t.pass();
+});
+
+test('signRequest() preserves signal', async (t) => {
+    const controller = new AbortController();
+
+    const request = new Request(testUrl, {
+        method: 'POST',
+        body: JSON.stringify({ query: '{ me { id } }' }),
+        signal: controller.signal,
+    });
+
+    const signedRequest = await signRequest(request, testSignArgs);
+
+    t.false(
+        signedRequest.signal.aborted,
+        'signed request is not aborted before the controller aborts',
+    );
+
+    controller.abort();
+
+    t.true(
+        signedRequest.signal.aborted,
+        'signed request is aborted once the controller aborts',
+    );
+});
+
+test('signRequest() preserves an already-aborted signal', async (t) => {
+    const request = new Request(testUrl, {
+        method: 'GET',
+        signal: AbortSignal.abort(),
+    });
+
+    const signedRequest = await signRequest(request, testSignArgs);
+
+    t.true(
+        signedRequest.signal.aborted,
+        'already-aborted state carries over to the signed request',
+    );
+});
+
+test('signRequest() preserves redirect and credentials', async (t) => {
+    const request = new Request(testUrl, {
+        method: 'GET',
+        redirect: 'manual',
+        credentials: 'include',
+    });
+
+    const signedRequest = await signRequest(request, testSignArgs);
+
+    t.is(signedRequest.redirect, 'manual', 'redirect preserved');
+    t.is(signedRequest.credentials, 'include', 'credentials preserved');
 });
 
 test('request to lambda URL', async (t) => {

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v5.0.0...v5.1.0) (2026-09-08)
+
+### Bug Fixes
+
+- The signed Request now preserves `signal`, `redirect`, and `credentials` from the input request (previously an AbortSignal never reached the outbound fetch, so callers' aborts and timeouts had no effect)
+
 ## [5.0.0](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v4.0.0...v5.0.0) (2025-01-26)
 
 ### BREAKING CHANGES

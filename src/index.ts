@@ -129,6 +129,9 @@ export const signRequest = async (
         body: request.body,
         headers: signedHeaders,
         duplex: request.duplex,
+        signal: request.signal,
+        redirect: request.redirect,
+        credentials: request.credentials,
     });
     return signedRequest;
 };
