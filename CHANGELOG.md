@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.1](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v5.1.0...v5.1.1) (2026-09-09)
+
+### Bug Fixes
+
+- Republish of 5.1.0: that release was packed from a stale `dist/` and did not actually contain the signal/redirect/credentials fix. No source changes. A `prepublishOnly` script now rebuilds and tests before every publish so a stale build cannot be published again.
+
 ## [5.1.0](https://github.com/stevecaldwell77/aws-signed-fetch-js/compare/v5.0.0...v5.1.0) (2026-09-08)
 
 ### Bug Fixes
